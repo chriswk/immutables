@@ -1,0 +1,32 @@
+plugins {
+    id 'idea'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    repositories {
+        jcenter()
+    }
+}
+
+targetCompatibility = "1.8"
+sourceCompatibility = "1.8"
+
+// In this section you declare the dependencies for your production and test code
+
+task wrapper(type: Wrapper) {
+  gradleVersion = "2.12"
+}
+
+project (":objects") {
+    dependencies {
+        compileOnly "org.immutables:value:2.1.15"
+    }
+}
+
+project (":main") {
+    dependencies {
+        compile project(":objects")
+    }
+}
