@@ -1,0 +1,32 @@
+plugins {
+  id 'java'
+  id 'idea'
+}
+
+repositories {
+  jcenter()
+}
+
+ext {
+  generatedSourcesDir = file("${buildDir}/generated-sources/main/java")
+}
+
+sourceSets {
+  main {
+    java {
+      srcDir 'src/main/java'
+      srcDir generatedSourcesDir
+    }
+  }
+}
+
+compileJava {
+  doFirst {
+    generatedSourcesDir.mkdirs()
+  }
+  options.compilerArgs += ['-s', generatedSourcesDir]
+}
+
+dependencies {
+  compileOnly "org.immutables:value:2.1.15"
+}
